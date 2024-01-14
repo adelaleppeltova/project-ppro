@@ -1,10 +1,19 @@
 services:
   mariadb:
     image: 'mariadb:latest'
+    container_name: projectPPRODatabase # add a name for the container
+    restart: always
     environment:
-      - 'MARIADB_DATABASE=mydatabase'
-      - 'MARIADB_PASSWORD=secret'
-      - 'MARIADB_ROOT_PASSWORD=verysecret'
+      - 'MARIADB_DATABASE=projectDatabase'
+      - 'MARIADB_PASSWORD=password'
       - 'MARIADB_USER=myuser'
     ports:
       - '3306'
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: root # this is the root user to login on startup
+    ports:
+      - '8081:80'
